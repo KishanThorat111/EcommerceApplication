@@ -42,8 +42,7 @@ app.use(express.json());
 
 const allowedOrigins = [
   "http://localhost:4200", // Local development
-  "https://ecommerceapplication-9de8.onrender.com/browser",
-   // Add your Render.com backend URL here
+  "https://ecommerceapplication-9de8.onrender.com/browser", // Add your Render.com backend URL here
 ];
 
 const corsOptions = {
