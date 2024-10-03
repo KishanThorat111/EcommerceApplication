@@ -8,7 +8,7 @@ import { Observable, of } from 'rxjs';
 export class ApiService {
   constructor(private httpClient: HttpClient) {}
 
-  // baseUrl = 'http://localhost:3000';
+      // baseUrl = 'http://localhost:3000';
   baseUrl = 'https://ecommerceapplication-backend.onrender.com';
 
   post(url: string, body: any): Observable<any> {
