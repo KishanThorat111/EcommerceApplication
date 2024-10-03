@@ -40,10 +40,27 @@ db.once("open", function () {
 
 app.use(express.json());
 
+const allowedOrigins = [
+  "http://localhost:4200", // Local development
+  "https://ecommerceapplication-9de8.onrender.com/browser",
+   // Add your Render.com backend URL here
+];
+
 const corsOptions = {
-  origin: "http://localhost:4200", // Allow the frontend to connect to the server
+  origin: (origin, callback) => {
+    // Allow requests with no origin, like mobile apps or curl requests
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true); // Allow the origin
+    } else {
+      callback(new Error("Not allowed by CORS")); // Deny the origin
+    }
+  },
   credentials: true, // Allow credentials, required for sessions with authentication
 };
+
+// Enable CORS
+app.use(cors(corsOptions));
+
 
 // Enable CORS
 app.use(cors(corsOptions));
