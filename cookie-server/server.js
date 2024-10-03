@@ -41,7 +41,7 @@ db.once("open", function () {
 app.use(express.json());
 
 const allowedOrigins = [
-  "http://localhost:4200", // Local development
+  // "http://localhost:4200", // Local development
   "https://ecommerceapplication-9de8.onrender.com", // Add your Render.com backend URL here
 ];
 
