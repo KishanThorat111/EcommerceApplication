@@ -40,30 +40,30 @@ db.once("open", function () {
 
 app.use(express.json());
 
-// const corsOptions = {
-//   origin: "*", // This will allow all origins
-//   credentials: true, // Allow credentials (cookies, headers, etc.)
-// };
-
-
-const allowedOrigins = [
-  // "http://localhost:4200", // Local development
-  "https://ecommerceapplication-9de8.onrender.com",
-  "https://ecommerceapplication-backend.onrender.com", // Add your Render.com backend URL here
-
-];
-
 const corsOptions = {
-  origin: (origin, callback) => {
-    // Allow requests with no origin (like mobile apps or Postman)
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true); // Allow the origin
-    } else {
-      callback(new Error("Not allowed by CORS")); // Deny the origin
-    }
-  },
+  origin: "https://ecommerceapplication-9de8.onrender.com", // This will allow all origins
   credentials: true, // Allow credentials (cookies, headers, etc.)
 };
+
+
+// const allowedOrigins = [
+//   // "http://localhost:4200", // Local development
+//   "https://ecommerceapplication-9de8.onrender.com",
+//   // "https://ecommerceapplication-backend.onrender.com", // Add your Render.com backend URL here
+
+// ];
+
+// const corsOptions = {
+//   origin: (origin, callback) => {
+//     // Allow requests with no origin (like mobile apps or Postman)
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true); // Allow the origin
+//     } else {
+//       callback(new Error("Not allowed by CORS")); // Deny the origin
+//     }
+//   },
+//   credentials: true, // Allow credentials (cookies, headers, etc.)
+// };
 
 
 // Enable CORS
