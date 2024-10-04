@@ -110,6 +110,26 @@ app.post("/sign-up", async (req, res) => {
 });
 
 // Login
+// app.post("/sign-in", async (req, res) => {
+//   try {
+//     const { username, password } = req.body;
+//     const user = await User.findOne({ username });
+
+//     if (!user || !(await bcrypt.compare(password, user.password))) {
+//       return res.status(401).send({ message: "Authentication failed" });
+//     }
+
+//     // Set user information in session
+//     req.session.user = { id: user._id, username: user.username };
+//     res.status(200).send({ message: "Logged in successfully" }); // Set-Cookie header will be sent with the response
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send(error);
+//   }
+// });
+
+
+// Login
 app.post("/sign-in", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -121,12 +141,15 @@ app.post("/sign-in", async (req, res) => {
 
     // Set user information in session
     req.session.user = { id: user._id, username: user.username };
+    console.log('Session after login:', req.session); // Debugging line
     res.status(200).send({ message: "Logged in successfully" }); // Set-Cookie header will be sent with the response
   } catch (error) {
     console.log(error);
     res.status(500).send(error);
   }
 });
+
+
 
 // Logout
 app.post("/logout", (req, res) => {
@@ -175,6 +198,7 @@ app.delete("/user/:id", isAuthenticated, async (req, res) => {
 // If the user is logged in, the request will be passed to the endpoint
 // If the user is not logged in, the middleware will return a 401 status
 app.get("/is-authenticated", isAuthenticated, (req, res) => {
+  console.log('User session:', req.session); // Debugging line
   res.status(200).send({ message: "Authenticated" });
 });
 
