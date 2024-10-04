@@ -1,6 +1,34 @@
-import { HttpClient, HttpEvent } from '@angular/common/http';
+// import { HttpClient, HttpEvent } from '@angular/common/http';
+// import { Injectable } from '@angular/core';
+// import { Observable } from 'rxjs';
+
+// @Injectable({
+//   providedIn: 'root',
+// })
+// export class ApiService {
+//   constructor(private httpClient: HttpClient) {}
+
+//   // baseUrl = 'http://localhost:3000';
+//   baseUrl = 'https://ecommerceapplication-backend.onrender.com';
+
+//   post(url: string, body: any): Observable<any> {
+//     return this.httpClient.post(`${this.baseUrl}${url}`, body, {
+//       withCredentials: true,
+//     });
+//   }
+
+//   get(url: string): Observable<any> {
+//     return this.httpClient.get(`${this.baseUrl}${url}`, {
+//       withCredentials: true,
+//     });
+//   }
+// }
+
+
+
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -8,18 +36,19 @@ import { Observable, of } from 'rxjs';
 export class ApiService {
   constructor(private httpClient: HttpClient) {}
 
-  // baseUrl = 'http://localhost:3000';
+  // Uncomment for local development
+  // baseUrl = 'http://localhost:3000'; 
   baseUrl = 'https://ecommerceapplication-backend.onrender.com';
 
-  post(url: string, body: any): Observable<any> {
+  post(url: string, body: any, options: { withCredentials?: boolean } = {}): Observable<any> {
     return this.httpClient.post(`${this.baseUrl}${url}`, body, {
-      withCredentials: true,
+      withCredentials: options.withCredentials,
     });
   }
 
-  get(url: string): Observable<any> {
+  get(url: string, options: { withCredentials?: boolean } = {}): Observable<any> {
     return this.httpClient.get(`${this.baseUrl}${url}`, {
-      withCredentials: true,
+      withCredentials: options.withCredentials,
     });
   }
 }

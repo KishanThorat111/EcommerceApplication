@@ -70,9 +70,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 
-// Enable CORS
-app.use(cors(corsOptions));
-
 // Middleware to create a session ID
 // When using req.session, the session ID will be stored in the cookie and the session data will be stored in memory (by default)
 app.use(
@@ -87,7 +84,7 @@ app.use(
      // Store the session in MongoDB, overrides the default memory store
 
     // This configuration ensures that the cookie is sent over HTTPS (if available) and is not accessible through client-side scripts
-    cookie: { secure: "auto", httpOnly: true, maxAge: 1000 * 60 * 60 * 24 }, // Max age in milliseconds (1 day)
+    cookie: { secure: "auto", httpOnly: true, maxAge: 1000 * 60 * 60 * 24, sameSite: 'none' }, // Max age in milliseconds (1 day)
   })
 );
 
