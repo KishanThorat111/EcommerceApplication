@@ -40,6 +40,12 @@ db.once("open", function () {
 
 app.use(express.json());
 
+// const corsOptions = {
+//   origin: "*", // This will allow all origins
+//   credentials: true, // Allow credentials (cookies, headers, etc.)
+// };
+
+
 const allowedOrigins = [
   // "http://localhost:4200", // Local development
   "https://ecommerceapplication-9de8.onrender.com",
