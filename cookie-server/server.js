@@ -41,7 +41,7 @@ db.once("open", function () {
 app.use(express.json());
 
 const corsOptions = {
-  origin: "https://ecommerceapplication-9de8.onrender.com", // This will allow all origins
+  origin: "https://ecommerceapplication-bm2n.onrender.com", // This will allow all origins
   credentials: true, // Allow credentials (cookies, headers, etc.)
 };
 
