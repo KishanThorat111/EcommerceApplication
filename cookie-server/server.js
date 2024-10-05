@@ -128,6 +128,27 @@ app.post("/sign-up", async (req, res) => {
 //   }
 // });
 
+// // Login
+// app.post("/sign-in", async (req, res) => {
+//   try {
+//     const { username, password } = req.body;
+//     const user = await User.findOne({ username });
+
+//     if (!user || !(await bcrypt.compare(password, user.password))) {
+//       return res.status(401).send({ message: "Authentication failed" });
+//     }
+
+//     // Set user information in session
+//     req.session.user = { id: user._id, username: user.username };
+//     console.log('Session after login:', req.session); // Debugging line
+//     res.status(200).send({ message: "Logged in successfully" }); // Set-Cookie header will be sent with the response
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send(error);
+//   }
+// });
+
+
 // Login
 app.post("/sign-in", async (req, res) => {
   try {
@@ -138,10 +159,10 @@ app.post("/sign-in", async (req, res) => {
       return res.status(401).send({ message: "Authentication failed" });
     }
 
-    // Set user information in session
-    req.session.user = { id: user._id, username: user.username };
+    // Set user information in session (added role)
+    req.session.user = { id: user._id, username: user.username, role: user.role }; // Added role
     console.log('Session after login:', req.session); // Debugging line
-    res.status(200).send({ message: "Logged in successfully" }); // Set-Cookie header will be sent with the response
+    res.status(200).send({ message: "Logged in successfully" });
   } catch (error) {
     console.log(error);
     res.status(500).send(error);
