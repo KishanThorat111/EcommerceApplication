@@ -88,26 +88,26 @@ app.use(
   })
 );
 
-// Registration
-// app.post("/sign-up", async (req, res) => {
-//   try {
-//     const { username, password } = req.body;
+Registration
+app.post("/sign-up", async (req, res) => {
+  try {
+    const { username, password } = req.body;
 
-//     // Check if the username is already taken
-//     const existing = await User.findOne({ username });
+    // Check if the username is already taken
+    const existing = await User.findOne({ username });
 
-//     if (existing) {
-//       return res.status(400).send({ message: "Username already taken." });
-//     }
-//     // Create a new user
-//     const user = new User({ username, password });
-//     await user.save();
+    if (existing) {
+      return res.status(400).send({ message: "Username already taken." });
+    }
+    // Create a new user
+    const user = new User({ username, password });
+    await user.save();
 
-//     res.status(201).send({ message: "User registered successfully." });
-//   } catch (error) {
-//     res.status(400).send(error);
-//   }
-// });
+    res.status(201).send({ message: "User registered successfully." });
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
 
 // Login
 // app.post("/sign-in", async (req, res) => {
@@ -127,32 +127,6 @@ app.use(
 //     res.status(500).send(error);
 //   }
 // });
-
-// Registration
-app.post("/sign-up", async (req, res) => {
-  try {
-    const { username, password } = req.body;
-
-    // Check if the username is already taken
-    const existing = await User.findOne({ username });
-
-    if (existing) {
-      return res.status(400).send({ message: "Username already taken." });
-    }
-
-    // Hash the password before saving
-    const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt rounds
-
-    // Create a new user with the hashed password
-    const user = new User({ username, password: hashedPassword });
-    await user.save();
-
-    res.status(201).send({ message: "User registered successfully." });
-  } catch (error) {
-    res.status(400).send(error);
-  }
-});
-
 
 // Login
 app.post("/sign-in", async (req, res) => {
