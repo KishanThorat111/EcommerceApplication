@@ -30,7 +30,6 @@
 //   );
 // };
 
-
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { inject } from '@angular/core';
@@ -40,19 +39,28 @@ export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService) as AuthService;
   const router = inject(Router) as Router;
 
-  // Check if the user is trying to access a protected route (like home)
+  // Check if the route is the auth route
+  if (route.routeConfig?.path === 'auth') {
+    return authService.isAuthenticated().pipe(
+      map(() => {
+        // If authenticated, redirect to home, but we want to allow the auth route
+        router.navigate(['/home']);
+        return false; // Prevent navigating to the auth route
+      }),
+      catchError(() => {
+        return of(true); // Allow navigation to auth route if not authenticated
+      })
+    );
+  }
+
+  // For other routes (like home)
   return authService.isAuthenticated().pipe(
-    map((isAuthenticated) => {
-      if (isAuthenticated) {
-        return true; // Allow navigation to the home page or other protected routes
-      } else {
-        router.navigate(['/auth']); // Redirect to the login page if not authenticated
-        return false; // Prevent navigation to protected routes
-      }
+    map(() => {
+      return true; // Allow navigation to the home page
     }),
     catchError(() => {
-      router.navigate(['/auth']); // Redirect to login on error (e.g., token expired)
-      return of(false); // Prevent navigation to protected routes
+      // If authentication fails, still allow access to home
+      return of(true); // Allow access to home page when not authenticated
     })
   );
 };
