@@ -38,7 +38,8 @@ export class ApiService {
 
   // Uncomment for local development
   // baseUrl = 'http://localhost:3000'; 
-  baseUrl = 'https://ecommerceapplication-backend.onrender.com';
+  // baseUrl = 'https://ecommerceapplication-backend.onrender.com';
+  baseUrl = 'https://ecommerceapplication-bm2n.onrender.com';
 
   post(url: string, body: any, options: { withCredentials?: boolean } = {}): Observable<any> {
     return this.httpClient.post(`${this.baseUrl}${url}`, body, {
