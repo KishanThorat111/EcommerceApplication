@@ -84,7 +84,12 @@ app.use(
      // Store the session in MongoDB, overrides the default memory store
 
     // This configuration ensures that the cookie is sent over HTTPS (if available) and is not accessible through client-side scripts
-    cookie: { secure: "auto", httpOnly: true, maxAge: 1000 * 60 * 60 * 24, sameSite: 'none' }, // Max age in milliseconds (1 day)
+    cookie: { 
+      secure: "auto",
+      httpOnly: true, 
+      maxAge: 1000 * 60 * 60 * 24, 
+      sameSite: 'none',
+     }, // Max age in milliseconds (1 day)
   })
 );
 
@@ -171,6 +176,25 @@ app.post("/sign-in", async (req, res) => {
 
 
 
+// // Logout
+// app.post("/logout", (req, res) => {
+//   if (req.session) {
+//     // Destroying the session
+//     req.session.destroy((err) => {
+//       if (err) {
+//         return res
+//           .status(500)
+//           .send({ message: "Could not log out, please try again" });
+//       } else {
+//         res.send({ message: "Logout successful" });
+//       }
+//     });
+//   } else {
+//     res.status(400).send({ message: "You are not logged in" });
+//   }
+// });
+
+
 // Logout
 app.post("/logout", (req, res) => {
   if (req.session) {
@@ -181,6 +205,13 @@ app.post("/logout", (req, res) => {
           .status(500)
           .send({ message: "Could not log out, please try again" });
       } else {
+        // Clear the cookie in the browser as well
+        res.clearCookie('connect.sid', { 
+          path: '/', 
+          httpOnly: true, 
+          secure: "auto", 
+          sameSite: 'none' 
+        });
         res.send({ message: "Logout successful" });
       }
     });
@@ -188,6 +219,10 @@ app.post("/logout", (req, res) => {
     res.status(400).send({ message: "You are not logged in" });
   }
 });
+
+
+
+
 
 // Delete user, admin only
 app.delete("/user/:id", isAuthenticated, async (req, res) => {
