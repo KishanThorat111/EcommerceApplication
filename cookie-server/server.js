@@ -13,12 +13,12 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 
 
-const username = process.env.MONGODB_USERNAME;
-const password = process.env.MONGODB_PASSWORD;
+const USERNAME = process.env.MONGODB_USERNAME;
+const PASSWORD = process.env.MONGODB_PASSWORD;
 
 mongoose
   .connect(
-    `mongodb+srv://${username}:${password}@cluster0.8cpbt.mongodb.net/Codedeck?retryWrites=true&w=majority&appName=Cluster0`
+    `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.8cpbt.mongodb.net/Codedeck?retryWrites=true&w=majority&appName=Cluster0`
   )
   .then(() => {
     console.log('Connected to MongoDB');
@@ -78,7 +78,7 @@ app.use(
     resave: false, // Avoids resaving sessions that haven't changed
     saveUninitialized: true, // Saves new sessions
     store: MongoStore.create({
-      mongoUrl: `mongodb+srv://${username}:${password}@cluster0.8cpbt.mongodb.net/Codedeck?retryWrites=true&w=majority`,
+      mongoUrl: `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.8cpbt.mongodb.net/Codedeck?retryWrites=true&w=majority`,
       maxAge: 1000 * 60 * 60 * 24, 
       autoRemove: 'native' 
     }),
@@ -115,24 +115,24 @@ app.post("/sign-up", async (req, res) => {
   }
 });
 
-// Login
-// app.post("/sign-in", async (req, res) => {
-//   try {
-//     const { username, password } = req.body;
-//     const user = await User.findOne({ username });
+Login
+app.post("/sign-in", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
 
-//     if (!user || !(await bcrypt.compare(password, user.password))) {
-//       return res.status(401).send({ message: "Authentication failed" });
-//     }
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      return res.status(401).send({ message: "Authentication failed" });
+    }
 
-//     // Set user information in session
-//     req.session.user = { id: user._id, username: user.username };
-//     res.status(200).send({ message: "Logged in successfully" }); // Set-Cookie header will be sent with the response
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send(error);
-//   }
-// });
+    // Set user information in session
+    req.session.user = { id: user._id, username: user.username };
+    res.status(200).send({ message: "Logged in successfully" }); // Set-Cookie header will be sent with the response
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
 
 // // Login
 // app.post("/sign-in", async (req, res) => {
@@ -154,46 +154,27 @@ app.post("/sign-up", async (req, res) => {
 //   }
 // });
 
+//////////////
+// // Login
+// app.post("/sign-in", async (req, res) => {
+//   try {
+//     const { username, password } = req.body;
+//     const user = await User.findOne({ username });
 
-// Login
-app.post("/sign-in", async (req, res) => {
-  try {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username });
+//     if (!user || !(await bcrypt.compare(password, user.password))) {
+//       return res.status(401).send({ message: "Authentication failed" });
+//     }
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(401).send({ message: "Authentication failed" });
-    }
-
-    // Set user information in session (added role)
-    req.session.user = { id: user._id, username: user.username, role: user.role }; // Added role
-    console.log('Session after login:', req.session); // Debugging line
-    res.status(200).send({ message: "Logged in successfully" });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send(error);
-  }
-});
-
-
-
-// // Logout
-// app.post("/logout", (req, res) => {
-//   if (req.session) {
-//     // Destroying the session
-//     req.session.destroy((err) => {
-//       if (err) {
-//         return res
-//           .status(500)
-//           .send({ message: "Could not log out, please try again" });
-//       } else {
-//         res.send({ message: "Logout successful" });
-//       }
-//     });
-//   } else {
-//     res.status(400).send({ message: "You are not logged in" });
+//     // Set user information in session (added role)
+//     req.session.user = { id: user._id, username: user.username, role: user.role }; // Added role
+//     console.log('Session after login:', req.session); // Debugging line
+//     res.status(200).send({ message: "Logged in successfully" });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send(error);
 //   }
 // });
+
 
 
 // Logout
@@ -206,13 +187,6 @@ app.post("/logout", (req, res) => {
           .status(500)
           .send({ message: "Could not log out, please try again" });
       } else {
-        // Clear the cookie in the browser as well
-        res.clearCookie('connect.sid', { 
-          path: '/', 
-          httpOnly: true, 
-          secure: "true", 
-          sameSite: 'none' 
-        });
         res.send({ message: "Logout successful" });
       }
     });
@@ -220,6 +194,32 @@ app.post("/logout", (req, res) => {
     res.status(400).send({ message: "You are not logged in" });
   }
 });
+
+////////
+// // Logout
+// app.post("/logout", (req, res) => {
+//   if (req.session) {
+//     // Destroying the session
+//     req.session.destroy((err) => {
+//       if (err) {
+//         return res
+//           .status(500)
+//           .send({ message: "Could not log out, please try again" });
+//       } else {
+//         // Clear the cookie in the browser as well
+//         res.clearCookie('connect.sid', { 
+//           path: '/', 
+//           httpOnly: true, 
+//           secure: "true", 
+//           sameSite: 'none' 
+//         });
+//         res.send({ message: "Logout successful" });
+//       }
+//     });
+//   } else {
+//     res.status(400).send({ message: "You are not logged in" });
+//   }
+// });
 
 
 
