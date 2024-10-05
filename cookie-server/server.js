@@ -79,7 +79,8 @@ app.use(
     saveUninitialized: true, // Saves new sessions
     store: MongoStore.create({
       mongoUrl: `mongodb+srv://${username}:${password}@cluster0.8cpbt.mongodb.net/Codedeck?retryWrites=true&w=majority`,
-      maxAge: 1000 * 60 * 60 * 24, // 1 day
+      maxAge: 1000 * 60 * 60 * 24, 
+      autoRemove: 'native' 
     }),
      // Store the session in MongoDB, overrides the default memory store
 
@@ -209,7 +210,7 @@ app.post("/logout", (req, res) => {
         res.clearCookie('connect.sid', { 
           path: '/', 
           httpOnly: true, 
-          secure: "auto", 
+          secure: "true", 
           sameSite: 'none' 
         });
         res.send({ message: "Logout successful" });
