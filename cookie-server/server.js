@@ -88,7 +88,7 @@ app.use(
   })
 );
 
-Registration
+//Registration
 app.post("/sign-up", async (req, res) => {
   try {
     const { username, password } = req.body;
