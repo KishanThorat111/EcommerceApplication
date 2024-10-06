@@ -75,8 +75,8 @@ app.use(cors(corsOptions));
 app.use(
   session({
     secret: process.env.SUPER_SECRET_KEY, // Secret key for session
-    resave: false, // Avoids resaving sessions that haven't changed
-    saveUninitialized: true, // Saves new sessions
+    // resave: false, // Avoids resaving sessions that haven't changed
+    saveUninitialized: false, // Saves new sessions
     store: MongoStore.create({
       mongoUrl: `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.8cpbt.mongodb.net/Codedeck?retryWrites=true&w=majority`,
       maxAge: 1000 * 60 * 60 * 24, 
@@ -90,7 +90,7 @@ app.use(
       httpOnly: true, 
       maxAge: 1000 * 60 * 60 * 24, 
       sameSite: 'none',
-     }, // Max age in milliseconds (1 day)
+     },
   })
 );
 
@@ -115,24 +115,67 @@ app.post("/sign-up", async (req, res) => {
   }
 });
 
-//Login
+// ///////////////////Login
+// app.post("/sign-in", async (req, res) => {
+//   try {
+//     const { username, password } = req.body;
+//     const user = await User.findOne({ username });
+
+//     if (!user || !(await bcrypt.compare(password, user.password))) {
+//       return res.status(401).send({ message: "Authentication failed" });
+//     }
+
+//     // Set user information in session
+//     req.session.user = { id: user._id, username: user.username };
+//     res.status(200).send({ message: "Logged in successfully" }); // Set-Cookie header will be sent with the response
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send(error);
+//   }
+// });
+
 app.post("/sign-in", async (req, res) => {
   try {
     const { username, password } = req.body;
-    const user = await User.findOne({ username });
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(401).send({ message: "Authentication failed" });
+    // Step 1: Check if both username and password are provided
+    if (!username || !password) {
+      return res.status(400).send({ message: "Username and password are required" });
     }
 
-    // Set user information in session
+    // Step 2: Check if user is already authenticated via session
+    if (req.session.user) {
+      // If already authenticated, return the current session info
+      return res.status(200).send({
+        message: "Already logged in",
+        session: req.session.user  // Return session data
+      });
+    }
+
+    // Step 3: Find the user in the database by username
+    const user = await User.findOne({ username });
+
+    // Step 4: Check if user exists and if the provided password matches the stored hashed password
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      // If the password is incorrect or the user does not exist, return 403
+      return res.status(403).send({ message: "Bad Credentials" });
+    }
+
+    // Step 5: If authentication is successful, set user information in session (without storing sensitive data)
     req.session.user = { id: user._id, username: user.username };
-    res.status(200).send({ message: "Logged in successfully" }); // Set-Cookie header will be sent with the response
+
+    // Step 6: Send a success message and attach the session (Set-Cookie header)
+    return res.status(200).send({
+      message: "Logged in successfully",
+      session: req.session.user  // Send session data to the client
+    });
+
   } catch (error) {
-    console.log(error);
-    res.status(500).send(error);
+    console.error("Error during sign-in:", error);
+    return res.status(500).send({ message: "An internal server error occurred" });
   }
 });
+
 
 // // Login
 // app.post("/sign-in", async (req, res) => {
@@ -177,26 +220,26 @@ app.post("/sign-in", async (req, res) => {
 
 
 
-// Logout
-app.post("/logout", (req, res) => {
-  if (req.session) {
-    // Destroying the session
-    req.session.destroy((err) => {
-      if (err) {
-        return res
-          .status(500)
-          .send({ message: "Could not log out, please try again" });
-      } else {
-        res.send({ message: "Logout successful" });
-      }
-    });
-  } else {
-    res.status(400).send({ message: "You are not logged in" });
-  }
-});
-
-////////
 // // Logout
+// app.post("/logout", (req, res) => {
+//   if (req.session) {
+//     // Destroying the session
+//     req.session.destroy((err) => {
+//       if (err) {
+//         return res
+//           .status(500)
+//           .send({ message: "Could not log out, please try again" });
+//       } else {
+//         res.send({ message: "Logout successful" });
+//       }
+//     });
+//   } else {
+//     res.status(400).send({ message: "You are not logged in" });
+//   }
+// });
+
+
+// /////////// Logout
 // app.post("/logout", (req, res) => {
 //   if (req.session) {
 //     // Destroying the session
@@ -222,32 +265,59 @@ app.post("/logout", (req, res) => {
 // });
 
 
-
-
-
-// Delete user, admin only
-app.delete("/user/:id", isAuthenticated, async (req, res) => {
-  try {
-    const id = req.session.user.id;
-
-    const admin = await User.findById(id);
-
-    if (!admin || admin.role !== "admin") {
-      return res.status(401).send({ message: "Unauthorized" });
-    }
-
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      return res.status(404).send({ message: "User not found" });
-    }
-
-    await user.remove();
-
-    res.send({ message: "User deleted successfully" });
-  } catch (error) {
-    res.status(500).send(error);
+// Logout
+app.post("/logout", (req, res) => {
+  if (req.session) {
+    // Destroying the session
+    req.session.destroy((err) => {
+      if (err) {
+        return res
+          .status(500)
+          .send({ message: "Could not log out, please try again" });
+      } else {
+        // Clear the cookie in the browser as well
+        res.clearCookie('connect.sid', { 
+          path: '/', 
+          httpOnly: true, 
+          secure: "true", 
+          sameSite: 'none' 
+        });
+        res.send({ message: "Logout successful" });
+      }
+    });
+  } else {
+    res.status(400).send({ message: "You are not logged in" });
   }
 });
+
+
+
+
+
+////////////
+// // Delete user, admin only
+// app.delete("/user/:id", isAuthenticated, async (req, res) => {
+//   try {
+//     const id = req.session.user.id;
+
+//     const admin = await User.findById(id);
+
+//     if (!admin || admin.role !== "admin") {
+//       return res.status(401).send({ message: "Unauthorized" });
+//     }
+
+//     const user = await User.findById(req.params.id);
+//     if (!user) {
+//       return res.status(404).send({ message: "User not found" });
+//     }
+
+//     await user.remove();
+
+//     res.send({ message: "User deleted successfully" });
+//   } catch (error) {
+//     res.status(500).send(error);
+//   }
+// });
 
 // Using auth middleware to check if the user is authenticated
 // The middleware will check if the user is logged in by checking the session
