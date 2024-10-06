@@ -86,7 +86,7 @@ app.use(
 
     // This configuration ensures that the cookie is sent over HTTPS (if available) and is not accessible through client-side scripts
     cookie: { 
-      secure: true,
+      secure: 'auto',
       httpOnly: true,  
       sameSite: 'none',
       maxAge: 1000 * 60 * 60 * 24,
