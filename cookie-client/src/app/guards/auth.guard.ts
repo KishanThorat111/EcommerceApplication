@@ -1,4 +1,4 @@
-////////////
+////////////////////////
 // import { CanActivateFn, Router } from '@angular/router';
 // import { AuthService } from '../services/auth.service';
 // import { inject } from '@angular/core';
@@ -114,9 +114,6 @@
 
 
 
-
-
-
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { inject } from '@angular/core';
@@ -143,23 +140,26 @@ export const authGuard: CanActivateFn = (route, state) => {
       })
     );
   } else {
-    // For other routes (e.g., home), check if the user is logged in
-    return authService.isLoggedIn().pipe(
-      map((isLoggedIn) => {
-        if (isLoggedIn) {
-          // If logged in, allow access to the route
+    // For other routes (e.g., home), check if the user is authenticated
+    return authService.isAuthenticated().pipe(
+      map((isAuthenticated) => {
+        if (isAuthenticated) {
+          // If authenticated, allow access to the route
           return true;
         } else {
-          // If not logged in, redirect to auth page
+          // If not authenticated, redirect to auth page
           router.navigate(['/auth']);
           return false;
         }
       }),
       catchError(() => {
-        // In case of an error, consider the user as logged out and redirect to auth
+        // In case of an error, treat it as not authenticated and redirect
         router.navigate(['/auth']);
         return of(false);
       })
     );
   }
 };
+
+
+
