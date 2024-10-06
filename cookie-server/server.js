@@ -76,7 +76,7 @@ app.use(
   session({
     secret: process.env.SUPER_SECRET_KEY, // Secret key for session
     resave: false, // Avoids resaving sessions that haven't changed
-    saveUninitialized: true, // Saves new sessions
+    saveUninitialized: false, // Saves new sessions
     store: MongoStore.create({
       mongoUrl: `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.8cpbt.mongodb.net/Codedeck?retryWrites=true&w=majority`,
       maxAge: 1000 * 60 * 60 * 24, 
