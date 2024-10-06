@@ -94,7 +94,7 @@ app.use(
   })
 );
 
-//Registration
+
 app.post("/sign-up", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -115,66 +115,87 @@ app.post("/sign-up", async (req, res) => {
   }
 });
 
-// ///////////////////Login
-// app.post("/sign-in", async (req, res) => {
+// //Registration
+// app.post("/sign-up", async (req, res) => {
 //   try {
 //     const { username, password } = req.body;
-//     const user = await User.findOne({ username });
 
-//     if (!user || !(await bcrypt.compare(password, user.password))) {
-//       return res.status(401).send({ message: "Authentication failed" });
+//     // Check if the username is already taken
+//     const existing = await User.findOne({ username });
+
+//     if (existing) {
+//       return res.status(400).send({ message: "Username already taken." });
 //     }
+//     // Create a new user
+//     const user = new User({ username, password });
+//     await user.save();
 
-//     // Set user information in session
-//     req.session.user = { id: user._id, username: user.username };
-//     res.status(200).send({ message: "Logged in successfully" }); // Set-Cookie header will be sent with the response
+//     res.status(201).send({ message: "User registered successfully." });
 //   } catch (error) {
-//     console.log(error);
-//     res.status(500).send(error);
+//     res.status(400).send(error);
 //   }
 // });
 
+//Login
 app.post("/sign-in", async (req, res) => {
   try {
     const { username, password } = req.body;
-
-    // Step 1: Check if both username and password are provided
-    if (!username || !password) {
-      return res.status(400).send({ message: "Username and password are required" });
-    }
-
-    // Step 2: Check if user is already authenticated via session
-    if (req.session.user) {
-      // If already authenticated, return the current session info
-      return res.status(200).send({
-        message: "Already logged in",
-        session: req.session.user  // Return session data
-      });
-    }
-
-    // Step 3: Find the user in the database by username
     const user = await User.findOne({ username });
 
-    // Step 4: Check if user exists and if the provided password matches the stored hashed password
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      // If the password is incorrect or the user does not exist, return 403
-      return res.status(403).send({ message: "Bad Credentials" });
+      return res.status(401).send({ message: "Authentication failed" });
     }
 
-    // Step 5: If authentication is successful, set user information in session (without storing sensitive data)
+    // Set user information in session
     req.session.user = { id: user._id, username: user.username };
-
-    // Step 6: Send a success message and attach the session (Set-Cookie header)
-    return res.status(200).send({
-      message: "Logged in successfully",
-      session: req.session.user  // Send session data to the client
-    });
-
+    res.status(200).send({ message: "Logged in successfully" }); // Set-Cookie header will be sent with the response
   } catch (error) {
-    console.error("Error during sign-in:", error);
-    return res.status(500).send({ message: "An internal server error occurred" });
+    console.log(error);
+    res.status(500).send(error);
   }
 });
+
+// app.post("/sign-in", async (req, res) => {
+//   try {
+//     const { username, password } = req.body;
+
+//     // Step 1: Check if both username and password are provided
+//     if (!username || !password) {
+//       return res.status(400).send({ message: "Username and password are required" });
+//     }
+
+//     // Step 2: Check if user is already authenticated via session
+//     if (req.session.user) {
+//       // If already authenticated, return the current session info
+//       return res.status(200).send({
+//         message: "Already logged in",
+//         session: req.session.user  // Return session data
+//       });
+//     }
+
+//     // Step 3: Find the user in the database by username
+//     const user = await User.findOne({ username });
+
+//     // Step 4: Check if user exists and if the provided password matches the stored hashed password
+//     if (!user || !(await bcrypt.compare(password, user.password))) {
+//       // If the password is incorrect or the user does not exist, return 403
+//       return res.status(403).send({ message: "Bad Credentials" });
+//     }
+
+//     // Step 5: If authentication is successful, set user information in session (without storing sensitive data)
+//     req.session.user = { id: user._id, username: user.username };
+
+//     // Step 6: Send a success message and attach the session (Set-Cookie header)
+//     return res.status(200).send({
+//       message: "Logged in successfully",
+//       session: req.session.user  // Send session data to the client
+//     });
+
+//   } catch (error) {
+//     console.error("Error during sign-in:", error);
+//     return res.status(500).send({ message: "An internal server error occurred" });
+//   }
+// });
 
 
 // // Login
@@ -239,33 +260,7 @@ app.post("/sign-in", async (req, res) => {
 // });
 
 
-// /////////// Logout
-// app.post("/logout", (req, res) => {
-//   if (req.session) {
-//     // Destroying the session
-//     req.session.destroy((err) => {
-//       if (err) {
-//         return res
-//           .status(500)
-//           .send({ message: "Could not log out, please try again" });
-//       } else {
-//         // Clear the cookie in the browser as well
-//         res.clearCookie('connect.sid', { 
-//           path: '/', 
-//           httpOnly: true, 
-//           secure: "true", 
-//           sameSite: 'none' 
-//         });
-//         res.send({ message: "Logout successful" });
-//       }
-//     });
-//   } else {
-//     res.status(400).send({ message: "You are not logged in" });
-//   }
-// });
-
-
-// Logout
+/////////// Logout
 app.post("/logout", (req, res) => {
   if (req.session) {
     // Destroying the session
@@ -291,10 +286,36 @@ app.post("/logout", (req, res) => {
 });
 
 
+// // Logout
+// app.post("/logout", (req, res) => {
+//   if (req.session) {
+//     // Destroying the session
+//     req.session.destroy((err) => {
+//       if (err) {
+//         return res
+//           .status(500)
+//           .send({ message: "Could not log out, please try again" });
+//       } else {
+//         // Clear the cookie in the browser as well
+//         res.clearCookie('connect.sid', { 
+//           path: '/', 
+//           httpOnly: true, 
+//           secure: "true", 
+//           sameSite: 'none' 
+//         });
+//         res.send({ message: "Logout successful" });
+//       }
+//     });
+//   } else {
+//     res.status(400).send({ message: "You are not logged in" });
+//   }
+// });
 
 
 
-////////////
+
+
+
 // // Delete user, admin only
 // app.delete("/user/:id", isAuthenticated, async (req, res) => {
 //   try {
