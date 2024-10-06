@@ -148,7 +148,7 @@ export const authGuard: CanActivateFn = (route, state) => {
           return true;
         } else {
           // If not authenticated, redirect to auth page
-          router.navigate(['/auth']);
+          router.navigate(['/home']);
           return false;
         }
       }),
