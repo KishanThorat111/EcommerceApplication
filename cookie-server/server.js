@@ -82,11 +82,11 @@ app.use(
       maxAge: 1000 * 60 * 60 * 24, 
       autoRemove: 'native' 
     }),
-     // Store the session in MongoDB, overrides the default memory store
+     // Store the session in MongoDB, overrides the default memory store//
 
     // This configuration ensures that the cookie is sent over HTTPS (if available) and is not accessible through client-side scripts
     cookie: { 
-      secure: 'auto',
+      secure: true, // it is been set to true
       httpOnly: true,  
       sameSite: 'none',
       maxAge: 1000 * 60 * 60 * 24,
@@ -313,7 +313,89 @@ app.use(
 
 
 
+//////////////////////////////////////////////////////////
+// app.post("/sign-up", async (req, res) => {
+//   try {
+//     const { username, password } = req.body;
 
+//     // Check if the username is already taken
+//     const existing = await User.findOne({ username });
+
+//     if (existing) {
+//       return res.status(400).send({ message: "Username already taken." });
+//     }
+
+//     // Create a new user
+//     const user = new User({ username, password });
+//     await user.save();
+
+//     res.status(201).send({ message: "User registered successfully." });
+//   } catch (error) {
+//     res.status(400).send(error);
+//   }
+// });
+
+///////////////////////////////////////////////
+// app.post("/sign-in", async (req, res) => {
+//   try {
+//     const { username, password } = req.body;
+
+//     // Check if both username and password are provided
+//     if (!username || !password) {
+//       return res.status(400).send({ message: "Username and password are required" });
+//     }
+
+//     // Find the user in the database by username
+//     const user = await User.findOne({ username });
+
+//     // Check if user exists and if the provided password matches the stored hashed password
+//     if (!user || !(await bcrypt.compare(password, user.password))) {
+//       return res.status(401).send({ message: "Invalid credentials. Authentication failed" });
+//     }
+
+//     // If authentication is successful, set user information in session (without storing sensitive data)
+//     req.session.user = { id: user._id, username: user.username };
+
+//     // Send a success message and attach the session (Set-Cookie header)
+//     res.status(200).send({
+//       message: "Logged in successfully",
+//       user: { id: user._id, username: user.username }  // Send basic user info
+//     });
+
+//   } catch (error) {
+//     console.error("Error during sign-in:", error);
+//     res.status(500).send({ message: "An internal server error occurred" });
+//   }
+// });
+
+////////////////////////////////////////////////////////////
+// app.post("/logout", (req, res) => {
+//   if (req.session) {
+//     // Destroying the session
+//     req.session.destroy((err) => {
+//       if (err) {
+//         return res
+//           .status(500)
+//           .send({ message: "Could not log out, please try again" });
+//       } else {
+//         // Clear the cookie in the browser as well
+//         res.clearCookie('connect.sid', { 
+//           path: '/', 
+//           httpOnly: true, 
+//           secure: "true", 
+//           sameSite: 'none' 
+//         });
+//         res.send({ message: "Logout successful" });
+//       }
+//     });
+//   } else {
+//     res.status(400).send({ message: "You are not logged in" });
+//   }
+// });
+
+
+
+// Registration
 app.post("/sign-up", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -324,7 +406,6 @@ app.post("/sign-up", async (req, res) => {
     if (existing) {
       return res.status(400).send({ message: "Username already taken." });
     }
-
     // Create a new user
     const user = new User({ username, password });
     await user.save();
@@ -335,40 +416,26 @@ app.post("/sign-up", async (req, res) => {
   }
 });
 
-
+// Login
 app.post("/sign-in", async (req, res) => {
   try {
     const { username, password } = req.body;
-
-    // Check if both username and password are provided
-    if (!username || !password) {
-      return res.status(400).send({ message: "Username and password are required" });
-    }
-
-    // Find the user in the database by username
     const user = await User.findOne({ username });
 
-    // Check if user exists and if the provided password matches the stored hashed password
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(401).send({ message: "Invalid credentials. Authentication failed" });
+      return res.status(401).send({ message: "Authentication failed" });
     }
 
-    // If authentication is successful, set user information in session (without storing sensitive data)
+    // Set user information in session
     req.session.user = { id: user._id, username: user.username };
-
-    // Send a success message and attach the session (Set-Cookie header)
-    res.status(200).send({
-      message: "Logged in successfully",
-      user: { id: user._id, username: user.username }  // Send basic user info
-    });
-
+    res.status(200).send({ message: "Logged in successfully" }); // Set-Cookie header will be sent with the response
   } catch (error) {
-    console.error("Error during sign-in:", error);
-    res.status(500).send({ message: "An internal server error occurred" });
+    console.log(error);
+    res.status(500).send(error);
   }
 });
 
-
+// Logout
 app.post("/logout", (req, res) => {
   if (req.session) {
     // Destroying the session
@@ -378,13 +445,6 @@ app.post("/logout", (req, res) => {
           .status(500)
           .send({ message: "Could not log out, please try again" });
       } else {
-        // Clear the cookie in the browser as well
-        res.clearCookie('connect.sid', { 
-          path: '/', 
-          httpOnly: true, 
-          secure: "true", 
-          sameSite: 'none' 
-        });
         res.send({ message: "Logout successful" });
       }
     });
@@ -392,6 +452,8 @@ app.post("/logout", (req, res) => {
     res.status(400).send({ message: "You are not logged in" });
   }
 });
+
+
 
 
 
