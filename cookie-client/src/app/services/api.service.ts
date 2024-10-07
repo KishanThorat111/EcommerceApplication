@@ -66,8 +66,8 @@ import { Observable } from 'rxjs';
 export class ApiService {
   constructor(private httpClient: HttpClient) {}
 
-  // baseUrl = 'https://ecommerceapplication-backend.onrender.com';
-  baseUrl = 'http://localhost:3000';
+  baseUrl = 'https://ecommerceapplication-backend.onrender.com';
+  // baseUrl = 'http://localhost:3000';
 
   post(url: string, body: any): Observable<any> {
     return this.httpClient.post(`${this.baseUrl}${url}`, body, {
