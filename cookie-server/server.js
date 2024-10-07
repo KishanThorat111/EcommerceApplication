@@ -16,6 +16,8 @@ const MongoStore = require("connect-mongo");
 const USERNAME = process.env.MONGODB_USERNAME;
 const PASSWORD = process.env.MONGODB_PASSWORD;
 
+app.set("trust proxy", 1); //added proxy here
+
 mongoose
   .connect(
     `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.8cpbt.mongodb.net/Codedeck?retryWrites=true&w=majority&appName=Cluster0`
