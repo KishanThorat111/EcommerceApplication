@@ -276,96 +276,132 @@ footer {
 
 /* General styling remains the same */
 
-/* Add media queries for different resolutions */
-@media screen and (max-width: 1024px) {
-  .navbar {
-    flex-direction: column;
-    height: auto;
-  }
-  
-  .nav-search {
-    width: 80%;
-  }
-
-  .hero-section {
-    height: 300px;
-    background-size: contain;
-  }
-
-  .shop-section {
-    flex-direction: column;
-    .box {
-      width: 90%;
-      margin: 10px auto;
-    }
-  }
-}
-
+/* Adjustments for mobile phones */
 @media screen and (max-width: 768px) {
   .navbar {
-    .nav-logo,
-    .nav-signin,
-    .nav-return {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    /* Remove 'Returns & Orders' and 'Account & Lists' for phone */
+    .nav-signin, 
+    .nav-return, 
+    .nav-addres {  /* Remove Deliver to India message */
       display: none;
     }
 
+    .logo {
+      background-size: cover;
+      height: 40px;
+      width: 70px;
+    }
+
+    /* Resize search bar to fit the logout button */
     .nav-search {
-      width: 100%;
+      width: 70%; /* Adjusted width to give more space for the button */
+      display: flex;
+      justify-content: flex-start;
+      margin-right: 10px; /* Add spacing between search and button */
+    }
+
+    .wrapper {
+      button {
+        width: 100%; /* Set button width to take the full remaining space */
+        background-color: #f7ad4b; /* Amazon's yellow color */
+        padding: 10px; /* Add more padding to cover the entire button */
+        border-radius: 4px;
+        color: white;
+        font-size: 0.9rem;
+        cursor: pointer;
+        border: none;
+        text-align: center;
+
+        &:hover {
+          background-color: #c2791a;
+        }
+      }
     }
   }
 
+  /* Remove panel items */
+  .panel {
+    display: none; /* Hide entire panel */
+  }
+
+  /* Adjust hero section text for mobile */
   .hero-section {
     height: 200px;
     background-position: center;
-  }
 
-  .shop-section {
-    .box {
-      width: 95%;
+    .hero-msg {
+      width: 90%;
+      font-size: 0.75rem; /* Make font smaller */
+      text-align: center;
     }
   }
 
-  .footer {
-    font-size: 0.7rem;
+  /* Adjust shop section for single column layout */
+  .shop-section {
+    display: flex;
+    flex-direction: column; /* Arrange boxes in a single column */
+    align-items: center; /* Center the boxes */
+    
+    .box {
+      width: 90%; /* Adjust box width for better fit */
+      margin: 10px 0; /* Add margin between boxes */
+    }
+  }
+
+  /* Footer adjustments */
+  footer {
+    .foot-panel2 {
+      ul {
+        font-size: 0.75rem; /* Reduce font size */
+        text-align: center; /* Center content */
+      }
+    }
+
+    /* Move Amazon logo to footer */
+    .foot-panel3 {
+      .logo {
+        background-size: cover;
+        height: 20px; /* Adjusted height to make it smaller */
+        width: 40px;  /* Adjusted width to make it smaller */
+      }
+    }
   }
 }
 
+/* For even smaller resolutions (below 480px) */
 @media screen and (max-width: 480px) {
   .navbar {
-    .nav-addres {
-      font-size: 0.75rem;
+    .nav-search {
+      width: 80%; /* Further adjust width for smaller screens */
+    }
+
+    .wrapper {
+      button {
+        width: 100%; /* Ensure button takes full width on small screens */
+        padding: 10px; /* Increase padding for full coverage */
+      }
     }
   }
 
   .hero-section {
     height: 150px;
-    background-position: center;
-  }
 
-  .shop-section {
-    .box {
-      width: 100%;
+    .hero-msg {
+      font-size: 0.65rem; /* Further reduce font size */
     }
   }
 
   footer {
-    display: block;
-  }
-}
+    .foot-panel2 ul {
+      font-size: 0.65rem; /* Smaller font for footer links */
+    }
 
-/* Logout button animation */
-.wrapper button {
-  background-color: #f7ad4b;
-  width: 100%;
-  color: white;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-
-  &:hover {
-    background-color: #c2791a;
-    transform: scale(1.05);
-  }
-
-  &:active {
-    transform: scale(0.95);
+    .copyright {
+      font-size: 0.6rem;
+    }
   }
 }
