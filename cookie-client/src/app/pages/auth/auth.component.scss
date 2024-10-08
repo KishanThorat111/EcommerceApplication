@@ -104,3 +104,13 @@
   }
 }
 
+.error-message {
+  color: #ff4d4d; /* Red color for error */
+  background-color: rgba(255, 0, 0, 0.1); /* Light red background */
+  padding: 0.5rem;
+  border: 1px solid #ff4d4d;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  text-align: center;
+}
