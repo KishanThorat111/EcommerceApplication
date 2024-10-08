@@ -1,190 +1,3 @@
-// import { Component } from '@angular/core';
-// import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import { AuthService } from '../../services/auth.service';
-// import { Router } from '@angular/router';
-// import { HttpErrorResponse } from '@angular/common/http';
-
-// @Component({
-//   selector: 'app-auth',
-//   templateUrl: './auth.component.html',
-//   styleUrl: './auth.component.scss',
-// })
-// export class AuthComponent {
-//   constructor(
-//     private formBuilder: FormBuilder,
-//     private authService: AuthService,
-//     private router: Router
-//   ) {}
-
-//   register: boolean = false;
-
-//   form: FormGroup = this.formBuilder.group({
-//     username: ['', Validators.required],
-//     password: ['', Validators.required],
-//   });
-
-//   signUp(e: Event) {
-//     e.preventDefault();
-
-//     this.authService.signUp(this.form.value).subscribe({
-//       next: () => {
-//         this.form.reset();
-//         this.register = false;
-//       },
-//       error: (error: HttpErrorResponse) => {
-//         console.error(error);
-//       },
-//     });
-//   }
-
-//   signIn(e: Event) {
-//     e.preventDefault();
-
-//     this.authService.signIn(this.form.value).subscribe({
-//       next: () => {
-//         this.router.navigate(['/home']);
-//       },
-//       error: (error: HttpErrorResponse) => {
-//         console.error(error);
-//       },
-//     });
-//   }
-// }
-
-// import { Component } from '@angular/core';
-// import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import { AuthService } from '../../services/auth.service';
-// import { Router } from '@angular/router';
-// import { HttpErrorResponse } from '@angular/common/http';
-
-// @Component({
-//   selector: 'app-auth',
-//   templateUrl: './auth.component.html',
-//   styleUrls: ['./auth.component.scss'],
-// })
-// export class AuthComponent {
-//   register: boolean = false;
-//   errorMessage: string = ''; // To store error messages
-
-//   form: FormGroup = this.formBuilder.group({
-//     username: ['', Validators.required],
-//     password: ['', Validators.required],
-//   });
-
-//   constructor(
-//     private formBuilder: FormBuilder,
-//     private authService: AuthService,
-//     private router: Router
-//   ) {}
-
-//   signUp(e: Event) {
-//     e.preventDefault();
-
-//     this.authService.signUp(this.form.value).subscribe({
-//       next: () => {
-//         this.form.reset();
-//         this.register = false;
-//         this.errorMessage = ''; // Clear error on success
-//       },
-//       error: (error: HttpErrorResponse) => {
-//         if (error.status === 409) {
-//           // 409: Conflict (e.g., user already exists)
-//           this.errorMessage = 'User already exists. Please try another username.';
-//         } else {
-//           this.errorMessage = 'An error occurred. Please try again.';
-//         }
-//       },
-//     });
-//   }
-
-//   signIn(e: Event) {
-//     e.preventDefault();
-
-//     this.authService.signIn(this.form.value).subscribe({
-//       next: () => {
-//         this.router.navigate(['/home']);
-//         this.errorMessage = ''; // Clear error on success
-//       },
-//       error: (error: HttpErrorResponse) => {
-//         if (error.status === 401) {
-//           // 401: Unauthorized (e.g., wrong credentials)
-//           this.errorMessage = 'Invalid username or password.';
-//         } else {
-//           this.errorMessage = 'An error occurred. Please try again.';
-//         }
-//       },
-//     });
-//   }
-// }
-
-
-
-// import { Component } from '@angular/core';
-// import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import { AuthService } from '../../services/auth.service';
-// import { Router } from '@angular/router';
-// import { HttpErrorResponse } from '@angular/common/http';
-
-// @Component({
-//   selector: 'app-auth',
-//   templateUrl: './auth.component.html',
-//   styleUrls: ['./auth.component.scss'],
-// })
-// export class AuthComponent {
-//   register: boolean = false;
-//   errorMessage: string = ''; // To store error messages
-
-//   form: FormGroup = this.formBuilder.group({
-//     username: ['', Validators.required],
-//     password: ['', Validators.required],
-//   });
-
-//   constructor(
-//     private formBuilder: FormBuilder,
-//     private authService: AuthService,
-//     private router: Router
-//   ) {}
-
-//   signUp(e: Event) {
-//     e.preventDefault();
-
-//     this.authService.signUp(this.form.value).subscribe({
-//       next: () => {
-//         this.form.reset();
-//         this.register = false;
-//         this.errorMessage = ''; // Clear error on success
-//       },
-//       error: (error: HttpErrorResponse) => {
-//         if (error.status === 409) {
-//           // 409: Conflict (e.g., user already exists)
-//           this.errorMessage = 'User already exists. Please try another username.';
-//         } else {
-//           this.errorMessage = 'An error occurred. Please try again.';
-//         }
-//       },
-//     });
-//   }
-
-//   signIn(e: Event) {
-//     e.preventDefault();
-
-//     this.authService.signIn(this.form.value).subscribe({
-//       next: () => {
-//         this.router.navigate(['/home']);
-//         this.errorMessage = ''; // Clear error on success
-//       },
-//       error: (error: HttpErrorResponse) => {
-//         if (error.status === 401) {
-//           // 401: Unauthorized (e.g., wrong credentials)
-//           this.errorMessage = 'Invalid username or password.';
-//         } else {
-//           this.errorMessage = 'An error occurred. Please try again.';
-//         }
-//       },
-//     });
-//   }
-// }
-
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
@@ -197,68 +10,69 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent {
-  register: boolean = false;
-  errorMessage: string = ''; // To store error messages
+  register: boolean = false; // Flag to toggle between Sign-In and Sign-Up mode
+  errorMessage: string = ''; // To store error messages for user feedback
 
+  // Initialize the form group with validation rules
   form: FormGroup = this.formBuilder.group({
-    username: ['', Validators.required],
-    password: ['', Validators.required],
+    username: ['', Validators.required], // Username is required
+    password: ['', Validators.required], // Password is required
   });
 
   constructor(
-    private formBuilder: FormBuilder,
-    private authService: AuthService,
-    private router: Router
+    private formBuilder: FormBuilder, // Injecting FormBuilder to create forms
+    private authService: AuthService,  // Injecting AuthService to handle API calls
+    private router: Router             // Injecting Router for navigation
   ) {}
 
-  // Sign up method
+  // Sign up method to register a new user
   signUp(e: Event) {
-    e.preventDefault();
+    e.preventDefault(); // Prevent default form submission behavior
 
     // Validate form before making a request
     if (this.form.invalid) {
-      this.errorMessage = 'Please fill in all the fields.';
+      this.errorMessage = 'Please fill in all the fields.'; // Display error if the form is invalid
       return;
     }
 
     this.authService.signUp(this.form.value).subscribe({
       next: () => {
-        this.form.reset();
-        this.register = false;
-        this.errorMessage = ''; // Clear error on success
+        this.form.reset(); // Reset the form on successful registration
+        this.register = false; // Switch back to Sign-In mode after successful sign-up
+        this.errorMessage = ''; // Clear any existing error messages
       },
       error: (error: HttpErrorResponse) => {
         if (error.status === 409) {
-          // 409: Conflict (e.g., user already exists)
+          // Handle case where username is already taken
           this.errorMessage = 'User already exists. Please try another username.';
         } else {
-          this.errorMessage = 'An error occurred. Please try again.';
+          this.errorMessage = 'An error occurred. Please try again.'; // Generic error message for other errors
         }
       },
     });
   }
 
-  // Sign in method
+  // Sign in method to authenticate a user
   signIn(e: Event) {
-    e.preventDefault();
+    e.preventDefault(); // Prevent default form submission behavior
 
     // Validate form before making a request
     if (this.form.invalid) {
-      this.errorMessage = 'Please fill in all the fields.';
+      this.errorMessage = 'Please fill in all the fields.'; // Display error if the form is invalid
       return;
     }
 
     this.authService.signIn(this.form.value).subscribe({
       next: () => {
-        this.router.navigate(['/home']);
-        this.errorMessage = ''; // Clear error on success
+        this.router.navigate(['/home']); // Navigate to the home page on successful login
+        this.errorMessage = ''; // Clear any existing error messages
       },
       error: (error: HttpErrorResponse) => {
         if (error.status === 401) {
-          // 401: Unauthorized (e.g., wrong credentials)
+          // Handle case where credentials are incorrect
           this.errorMessage = 'Invalid username or password.';
         } else {
-          this.errorMessage = 'An error occurred. Please try again.';
+          this.errorMessage = 'An error occurred. Please try again.'; // Generic error message for other errors
         }
       },
     });

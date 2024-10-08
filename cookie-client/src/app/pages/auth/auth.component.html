@@ -1,36 +1,4 @@
-<!-- <div class="login-container">
-  <form
-    class="wrapper"
-    (submit)="register ? signUp($event) : signIn($event)"
-    [formGroup]="form"
-  >
-    <h3>{{ register ? "SIGN-UP" : "SIGN-IN" }}</h3>
-
-    <input
-      formControlName="username"
-      type="text"
-      class="username"
-      placeholder="Username"
-    />
-    <input
-      formControlName="password"
-      type="password"
-      class="password"
-      placeholder="Password"
-    />
-    <button [class.inactive]="!form.valid" type="submit">
-      {{ register ? "Sign-Up" : "Sign-In" }}
-    </button>
-    <button class="clear" type="button" (click)="register = !register">
-      {{ register ? "Already have an account?" : "Don't have an account?" }}
-    </button>
-  </form>
-  
-</div>
-
- -->
-
- <div class="login-container">
+<div class="login-container">
   <form
     class="wrapper"
     (submit)="register ? signUp($event) : signIn($event)"
@@ -43,26 +11,34 @@
       {{ errorMessage }}
     </div>
 
+    <!-- Username input field -->
     <input
       formControlName="username"
       type="text"
       class="username"
       placeholder="Username"
     />
+    
+    <!-- Password input field -->
     <input
       formControlName="password"
       type="password"
       class="password"
       placeholder="Password"
     />
+
+    <!-- Submit button for sign-up/sign-in, disabled when form is invalid -->
     <button [class.inactive]="!form.valid" type="submit">
       {{ register ? 'Sign-Up' : 'Sign-In' }}
     </button>
+
+    <!-- Toggle button to switch between sign-in and sign-up -->
     <button class="clear" type="button" (click)="register = !register">
       {{ register ? 'Already have an account?' : "Don't have an account?" }}
     </button>
   </form>
 
+  <!-- Cookie policy alert for users -->
   <div class="cookie-alert">
     <p>Please allow third-party cookies to ensure this app works correctly.</p>
   </div>

@@ -1,23 +1,27 @@
+// Load environment variables from .env file
 require("dotenv").config();
 
+// Import necessary modules
 const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-
 const cors = require("cors");
 const isAuthenticated = require("./middleware/is-authenticated");
 const User = require("./models/User");
 const app = express();
 
+// Session and MongoDB storage
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 
-
+// MongoDB credentials from environment variables
 const USERNAME = process.env.MONGODB_USERNAME;
 const PASSWORD = process.env.MONGODB_PASSWORD;
 
-app.set("trust proxy", 1); //added proxy here
+// Trust the first proxy
+app.set("trust proxy", 1);
 
+// Connect to MongoDB using Mongoose
 mongoose
   .connect(
     `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.8cpbt.mongodb.net/Codedeck?retryWrites=true&w=majority&appName=Cluster0`
@@ -29,30 +33,21 @@ mongoose
     console.error('Failed to connect to MongoDB', err);
   });
 
-
-// mongoose.connect(process.env.MONGODB_URI);
-
 // Debugging the connection
 const db = mongoose.connection;
-
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function () {
   console.log("Successfully connected to MongoDB!");
 });
 
+// Middleware to parse incoming JSON requests
 app.use(express.json());
 
-// const corsOptions = {
-//   origin: "https://ecommerceapplication-9de8.onrender.com", // This will allow all origins
-//   credentials: true, // Allow credentials (cookies, headers, etc.)
-// };
-
-
+// CORS configuration
 const allowedOrigins = [
   "https://ecommerceapplication-9de8.onrender.com",
   "http://localhost:4200", // Local development
   "https://ecommerceapplication-backend.onrender.com", // Add your Render.com backend URL here
-
 ];
 
 const corsOptions = {
@@ -67,13 +62,10 @@ const corsOptions = {
   credentials: true, // Allow credentials (cookies, headers, etc.)
 };
 
-
-// Enable CORS
+// Enable CORS for the application
 app.use(cors(corsOptions));
 
-
 // Middleware to create a session ID
-// When using req.session, the session ID will be stored in the cookie and the session data will be stored in memory (by default)
 app.use(
   session({
     secret: process.env.SUPER_SECRET_KEY, // Secret key for session
@@ -81,24 +73,19 @@ app.use(
     saveUninitialized: true, // Saves new sessions
     store: MongoStore.create({
       mongoUrl: `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.8cpbt.mongodb.net/Codedeck?retryWrites=true&w=majority`,
-      maxAge: 1000 * 60 * 60 * 24, 
-      autoRemove: 'native' 
+      maxAge: 1000 * 60 * 60 * 24, // Session expiration
+      autoRemove: 'native' // Automatically remove expired sessions
     }),
-     // Store the session in MongoDB, overrides the default memory store//
-
-    // This configuration ensures that the cookie is sent over HTTPS (if available) and is not accessible through client-side scripts
     cookie: { 
-      secure: true, // it is been set to true
-      httpOnly: true,  
-      sameSite: 'none',
-      maxAge: 1000 * 60 * 60 * 24,
-     },
+      secure: true, // Set to true for HTTPS connections
+      httpOnly: true, // Prevent client-side scripts from accessing the cookie
+      sameSite: 'none', // Allow cross-site cookies
+      maxAge: 1000 * 60 * 60 * 24, // Cookie expiration
+    },
   })
 );
 
-
-
-// Registration
+// Registration endpoint
 app.post("/sign-up", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -109,6 +96,7 @@ app.post("/sign-up", async (req, res) => {
     if (existing) {
       return res.status(400).send({ message: "Username already taken." });
     }
+
     // Create a new user
     const user = new User({ username, password });
     await user.save();
@@ -119,7 +107,7 @@ app.post("/sign-up", async (req, res) => {
   }
 });
 
-// Login
+// Login endpoint
 app.post("/sign-in", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -138,15 +126,13 @@ app.post("/sign-in", async (req, res) => {
   }
 });
 
-// Logout
+// Logout endpoint
 app.post("/logout", (req, res) => {
   if (req.session) {
     // Destroying the session
     req.session.destroy((err) => {
       if (err) {
-        return res
-          .status(500)
-          .send({ message: "Could not log out, please try again" });
+        return res.status(500).send({ message: "Could not log out, please try again" });
       } else {
         res.send({ message: "Logout successful" });
       }
@@ -156,41 +142,14 @@ app.post("/logout", (req, res) => {
   }
 });
 
-// // Delete user, admin only
-// app.delete("/user/:id", isAuthenticated, async (req, res) => {
-//   try {
-//     const id = req.session.user.id;
-
-//     const admin = await User.findById(id);
-
-//     if (!admin || admin.role !== "admin") {
-//       return res.status(401).send({ message: "Unauthorized" });
-//     }
-
-//     const user = await User.findById(req.params.id);
-//     if (!user) {
-//       return res.status(404).send({ message: "User not found" });
-//     }
-
-//     await user.remove();
-
-//     res.send({ message: "User deleted successfully" });
-//   } catch (error) {
-//     res.status(500).send(error);
-//   }
-// });
-////
-// Using auth middleware to check if the user is authenticated
-// The middleware will check if the user is logged in by checking the session
-// If the user is logged in, the request will be passed to the endpoint
-// If the user is not logged in, the middleware will return a 401 status
+// Check authentication status endpoint
 app.get("/is-authenticated", isAuthenticated, (req, res) => {
   console.log('User session:', req.session); // Debugging line
   res.status(200).send({ message: "Authenticated" });
 });
 
+// Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-

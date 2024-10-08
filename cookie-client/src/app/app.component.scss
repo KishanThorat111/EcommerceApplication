@@ -1,22 +1,27 @@
+// Styles for the main wrapper
 .wrapper {
-  width: 100%;
+  width: 100%; // Set the width of the wrapper to 100% of the parent
 
+  // Styles for the header section
   .header {
-    font-size: 2rem;
-    font-weight: 900;
+    font-size: 2rem; // Set the font size for the header
+    font-weight: 900; // Set the font weight for the header to bold
 
-    padding: 0;
+    padding: 0; // Remove padding from the header
 
+    // Styles for the logo inside the header
     .logo {
-      width: 5rem;
+      width: 5rem; // Set the width of the logo to 5rem
     }
   }
 
+  // Styles for the body section
   .body {
-    flex: 1;
+    flex: 1; // Allow the body to grow and fill the remaining space
   }
 
+  // Styles for the footer section
   .footer {
-    padding: 1rem;
+    padding: 1rem; // Add padding to the footer
   }
 }

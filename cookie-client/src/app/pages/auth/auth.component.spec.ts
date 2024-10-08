@@ -8,16 +8,17 @@ describe('AuthComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AuthComponent]
+      declarations: [AuthComponent] // Declare the AuthComponent to be tested
     })
-    .compileComponents();
+    .compileComponents(); // Compile template and styles
     
+    // Create the component and test fixture
     fixture = TestBed.createComponent(AuthComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = fixture.componentInstance; // Get the component instance
+    fixture.detectChanges(); // Trigger initial data binding
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component).toBeTruthy(); // Test if the component instance is created successfully
   });
 });

@@ -1,405 +1,435 @@
 // home.component.scss
+
+// Global styles for margin, font, and box model
 * {
   margin: 0;
   font-family: Arial, sans-serif;
   box-sizing: border-box;
 }
 
+// Navbar styles
 .navbar {
-  height: 60px;
-  background-color: #0f1111;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
+  height: 60px; // Height of the navbar
+  background-color: #0f1111; // Background color
+  color: white; // Text color
+  display: flex; // Flexbox for layout
+  align-items: center; // Center items vertically
+  justify-content: space-evenly; // Space items evenly
 }
 
+// Logo styles
 .nav-logo {
-  height: 50px;
-  width: 100px;
+  height: 50px; // Height of the logo
+  width: 100px; // Width of the logo
 }
 
 .logo {
-  // background-image: url('amazon_logo.png');
-  background-size: cover;
-  height: 50px;
-  width: 100%;
+  // background-image: url('amazon_logo.png'); // Uncomment for logo background image
+  background-size: cover; // Cover the area with the background image
+  height: 50px; // Height of the logo
+  width: 100%; // Full width of the parent element
 }
 
+// Border styles for interactive elements
 .border {
-  border: 1.5px solid transparent;
+  border: 1.5px solid transparent; // Default border style
 }
 
 .border:hover {
-  border: 1.5px solid white;
+  border: 1.5px solid white; // Change border color on hover
 }
 
+// Text styles for added elements
 .add-first {
-  color: #cccccc;
-  font-size: 0.85rem;
-  margin-left: 15px;
+  color: #cccccc; // Text color
+  font-size: 0.85rem; // Font size
+  margin-left: 15px; // Margin for spacing
 }
 
 .add-second {
-  font-size: 1rem;
-  margin-left: 3px;
+  font-size: 1rem; // Font size
+  margin-left: 3px; // Margin for spacing
 }
 
+// Add icon styles
 .add-icon {
-  display: flex;
-  align-items: center;
+  display: flex; // Flexbox for layout
+  align-items: center; // Center icon vertically
 }
 
+// Search bar styles
 .nav-search {
-  display: flex;
-  height: 40px; 
-  width: 620px;
-  border-radius: 4px;
-  justify-content: space-evenly;
+  display: flex; // Flexbox for layout
+  height: 40px; // Height of the search bar
+  width: 620px; // Width of the search bar
+  border-radius: 4px; // Rounded corners
+  justify-content: space-evenly; // Space items evenly
 }
 
 .nav-search:hover {
-  border: 2px solid orange;
+  border: 2px solid orange; // Change border color on hover
 }
 
+// Search select dropdown styles
 .search-select {
-  background-color: #f3f3f3;
-  width: 50px;
-  text-align: center;
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
-  border: none;
-}  
+  background-color: #f3f3f3; // Background color
+  width: 50px; // Width of the dropdown
+  text-align: center; // Center text
+  border-top-left-radius: 4px; // Rounded top left corner
+  border-bottom-left-radius: 4px; // Rounded bottom left corner
+  border: none; // No border
+}
 
+// Search input field styles
 .search-input {
-  width: 100%;
-  font-size: 1rem;
-  border: none;
+  width: 100%; // Full width of the parent element
+  font-size: 1rem; // Font size
+  border: none; // No border
 }
 
+// Search icon styles
 .search-icon {
-  width: 45px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.2rem;
-  background-color: #febd68;
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-  color: #0f1111;
+  width: 45px; // Width of the search icon
+  display: flex; // Flexbox for layout
+  justify-content: center; // Center icon horizontally
+  align-items: center; // Center icon vertically
+  font-size: 1.2rem; // Font size
+  background-color: #febd68; // Background color
+  border-top-right-radius: 4px; // Rounded top right corner
+  border-bottom-right-radius: 4px; // Rounded bottom right corner
+  color: #0f1111; // Text color
 }
 
+// Button wrapper styles
 .wrapper {
   button {
-    background-color: #f7ad4b;
-    width: 100%;
-    color: white;
+    background-color: #f7ad4b; // Button background color
+    width: 100%; // Full width
+    color: white; // Text color
 
     &:hover {
-      background-color: #c2791a;
+      background-color: #c2791a; // Change background color on hover
     }
   }
 }
 
-
+// Span text styles
 span {
-  font-size: 0.7rem;
+  font-size: 0.7rem; // Font size for spans
 }
 
+// Second navigation item styles
 .nav-second {
-  font-size: 0.85rem;
-  font-weight: 700;
+  font-size: 0.85rem; // Font size
+  font-weight: 700; // Bold text
 }
 
+// Cart icon styles
 .nav-cart i {
-  font-size: 30px;
+  font-size: 30px; // Icon size
 }
 
+// Cart text styles
 .nav-cart {
-  font-size: 0.85rem;
-  font-weight: 700;
+  font-size: 0.85rem; // Font size
+  font-weight: 700; // Bold text
 }
 
+// Panel styles for sections
 .panel {
-  height: 40px;
-  background-color: #222f3b;
-  display: flex;
-  color: white;
-  align-items: center;
-  justify-content: space-evenly;
+  height: 40px; // Height of the panel
+  background-color: #222f3b; // Background color
+  display: flex; // Flexbox for layout
+  color: white; // Text color
+  align-items: center; // Center items vertically
+  justify-content: space-evenly; // Space items evenly
 }
 
-.panel-ops p{
-  display: inline;
-  margin-left: 15px;
+// Panel operations styles
+.panel-ops p {
+  display: inline; // Inline display
+  margin-left: 15px; // Margin for spacing
 }
 
 .panel-ops {
-  width: 70%;
-  font-size: 0.85rem;
+  width: 70%; // Width of the operations section
+  font-size: 0.85rem; // Font size
 }
 
+// Margin and cursor style for panel operations
 .panel-ops p {
-  margin: 5px 0;
-  cursor: pointer;
+  margin: 5px 0; // Margin for spacing
+  cursor: pointer; // Pointer cursor for interactivity
 }
 
+// Deals panel styles
 .panel-deals {
-  font-size: 0.9rem;
-  font-weight: 700;
+  font-size: 0.9rem; // Font size
+  font-weight: 700; // Bold text
 }
 
+// Hero section styles
 .hero-section {
-  // background-image: url("hero_image.jpg");
-  background-size: cover;
-  height: 380px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
+  // background-image: url("hero_image.jpg"); // Uncomment for hero image background
+  background-size: cover; // Cover the area with the background image
+  height: 380px; // Height of the hero section
+  display: flex; // Flexbox for layout
+  justify-content: center; // Center content horizontally
+  align-items: flex-end; // Align items at the bottom
 }
 
+// Hero message styles
 .hero-msg {
-  background-color: white;
-  color: black;
-  height: 40px;
-  display: flex;
-  align-items: center;  
-  justify-content: center;
-  font-size: 0.85rem; 
-  width: 80%;
-  margin-bottom: 25px;
+  background-color: white; // Background color
+  color: black; // Text color
+  height: 40px; // Height of the message box
+  display: flex; // Flexbox for layout
+  align-items: center; // Center text vertically
+  justify-content: center; // Center text horizontally
+  font-size: 0.85rem; // Font size
+  width: 80%; // Width of the message box
+  margin-bottom: 25px; // Margin at the bottom
 }
 
+// Link styles in hero message
 .hero-msg a {
-  color: #007185;
+  color: #007185; // Link color
 }
 
+// Shop section styles
 .shop-section {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  background-color: #e2e7e6;
+  display: flex; // Flexbox for layout
+  flex-wrap: wrap; // Wrap items
+  justify-content: space-evenly; // Space items evenly
+  background-color: #e2e7e6; // Background color
 }
 
+// Box styles for items in the shop
 .box {
-  height: 400px;
-  width: 23%;
-  background-color: white;
-  padding: 20px 0px 15px;
-  margin-top: 15px;
+  height: 400px; // Height of the box
+  width: 23%; // Width of the box
+  background-color: white; // Background color
+  padding: 20px 0px 15px; // Padding
+  margin-top: 15px; // Margin at the top
 }
 
-
+// Box image styles
 .box-img {
-  height: 300px;
-  background-size: cover;
-  margin-top: 1rem;
-  margin-bottom: 1rem;  
+  height: 300px; // Height of the image
+  background-size: cover; // Cover the area with the image
+  margin-top: 1rem; // Margin at the top
+  margin-bottom: 1rem; // Margin at the bottom
 }
 
+// Box content styles
 .box-content {
-  font-size: .85rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
+  font-size: .85rem; // Font size
+  margin-left: 1rem; // Margin for spacing
+  margin-right: 1rem; // Margin for spacing
 }
 
-.box-content p{
-  color:  #007185;
+// Color styles for box content paragraphs
+.box-content p {
+  color: #007185; // Text color
 }
 
+// Footer styles
 footer {
-  margin-top: 15px;
+  margin-top: 15px; // Margin at the top
 }
 
+// Footer panel 1 styles
 .foot-panel1 {
-  background-color: #374758;
-  color: white;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 0.85rem;
+  background-color: #374758; // Background color
+  color: white; // Text color
+  height: 50px; // Height of the footer panel
+  display: flex; // Flexbox for layout
+  justify-content: center; // Center content horizontally
+  align-items: center; // Center content vertically
+  font-size: 0.85rem; // Font size
 }
 
+// Footer panel 2 styles
 .foot-panel2 {
-  background-color: #222f3b;
-  color: white;
-  height: 300px;
-  display: flex;
-  justify-content: space-evenly;
+  background-color: #222f3b; // Background color
+  color: white; // Text color
+  height: 300px; // Height of the footer panel
+  display: flex; // Flexbox for layout
+  justify-content: space-evenly; // Space items evenly
 }
 
-.foot-panel2 ul a{
-  display: block;
-  font-size: 0.85rem ;
-  margin-top: 10px;
-  color: #dddddd ;
+// Styles for links in footer panel 2
+.foot-panel2 ul a {
+  display: block; // Block display for links
+  font-size: 0.85rem; // Font size
+  margin-top: 10px; // Margin at the top
+  color: #dddddd; // Text color
 }
 
-
-.foot-panel3{
-  background-color: #222f3b;
-  color: white;
-  border-top: 0.5px solid white;
-  height: 70px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+// Footer panel 3 styles
+.foot-panel3 {
+  background-color: #222f3b; // Background color
+  color: white; // Text color
+  border-top: 0.5px solid white; // Top border
+  height: 70px; // Height of the footer panel
+  display: flex; // Flexbox for layout
+  justify-content: center; // Center content horizontally
+  align-items: center; // Center content vertically
 }
 
-.logo{
-  // background-image: url("amazon_logo.png");
-  background-size: cover;
-  height: 50px;
-  width: 100px;
-
+// Logo styles for footer
+.logo {
+  // background-image: url("amazon_logo.png"); // Uncomment for logo background image
+  background-size: cover; // Cover the area with the background image
+  height: 50px; // Height of the logo
+  width: 100px; // Width of the logo
 }
 
-.foot-panel4{
-  background-color: #0f1111;
-  color: white;
-  height: 100px;
-  font-size: 0.7rem;
-  text-align: center;
+// Footer panel 4 styles
+.foot-panel4 {
+  background-color: #0f1111; // Background color
+  color: white; // Text color
+  height: 100px; // Height of the footer panel
+  font-size: 0.7rem; // Font size
+  text-align: center; // Center text
 }
 
-.pages{
-    
-  padding-top: 25px;
+// Page spacing styles
+.pages {
+  padding-top: 25px; // Padding at the top
 }
 
-.copyright{
-  padding-top: 5px;
+// Copyright styles
+.copyright {
+  padding-top: 5px; // Padding at the top
 }
 
-
-
-/* Adjustments for mobile phones */
+// Media queries for mobile phones
 @media screen and (max-width: 768px) {
   .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: flex; // Flexbox for layout
+    justify-content: space-between; // Space items evenly
+    align-items: center; // Center items vertically
 
-    /* Remove 'Returns & Orders' and 'Account & Lists' for phone */
+    // Remove 'Returns & Orders' and 'Account & Lists' for phone
     .nav-signin, 
     .nav-return, 
-    .nav-addres {  /* Remove Deliver to India message */
-      display: none;
+    .nav-addres {  // Remove Deliver to India message 
+      display: none; // Hide these elements
     }
 
     .logo {
-      background-size: cover;
-      height: 40px;
-      width: 70px;
+      background-size: cover; // Cover the area with the background image
+      height: 40px; // Height of the logo
+      width: 70px; // Width of the logo
     }
 
-    /* Resize search bar to fit the logout button */
+    // Resize search bar to fit the logout button
     .nav-search {
-      width: 70%; /* Adjusted width to give more space for the button */
-      display: flex;
-      justify-content: flex-start;
-      margin-right: 10px; /* Add spacing between search and button */
+      width: 70%; // Adjusted width to give more space for the button
+      display: flex; // Flexbox for layout
+      justify-content: flex-start; // Align items to the start
+      margin-right: 10px; // Add spacing between search and button
     }
 
     .wrapper {
       button {
-        width: 100%; /* Set button width to take the full remaining space */
-        background-color: #f7ad4b; /* Amazon's yellow color */
-        padding: 10px; /* Add more padding to cover the entire button */
-        border-radius: 4px;
-        color: white;
-        font-size: 0.9rem;
-        cursor: pointer;
-        border: none;
-        text-align: center;
+        width: 100%; // Set button width to take the full remaining space
+        background-color: #f7ad4b; // Amazon's yellow color
+        padding: 10px; // Add more padding to cover the entire button
+        border-radius: 4px; // Rounded corners
+        color: white; // Text color
+        font-size: 0.9rem; // Font size
+        cursor: pointer; // Pointer cursor for interactivity
+        border: none; // No border
+        text-align: center; // Center text
 
         &:hover {
-          background-color: #c2791a;
+          background-color: #c2791a; // Change background color on hover
         }
       }
     }
   }
 
-  /* Remove panel items */
+  // Remove panel items
   .panel {
-    display: none; /* Hide entire panel */
+    display: none; // Hide entire panel
   }
 
-  /* Adjust hero section text for mobile */
+  // Adjust hero section text for mobile
   .hero-section {
-    height: 200px;
-    background-position: center;
+    height: 200px; // Reduced height for mobile
+    background-position: center; // Center background position
 
     .hero-msg {
-      width: 90%;
-      font-size: 0.75rem; /* Make font smaller */
-      text-align: center;
+      width: 90%; // Width of the message box
+      font-size: 0.75rem; // Make font smaller
+      text-align: center; // Center text
     }
   }
 
-  /* Adjust shop section for single column layout */
+  // Adjust shop section for single column layout
   .shop-section {
-    display: flex;
-    flex-direction: column; /* Arrange boxes in a single column */
-    align-items: center; /* Center the boxes */
+    display: flex; // Flexbox for layout
+    flex-direction: column; // Arrange boxes in a single column
+    align-items: center; // Center the boxes
     
     .box {
-      width: 90%; /* Adjust box width for better fit */
-      margin: 10px 0; /* Add margin between boxes */
+      width: 90%; // Adjust box width for better fit
+      margin: 10px 0; // Add margin between boxes
     }
   }
 
-  /* Footer adjustments */
+  // Footer adjustments
   footer {
     .foot-panel2 {
       ul {
-        font-size: 0.75rem; /* Reduce font size */
-        text-align: center; /* Center content */
+        font-size: 0.75rem; // Reduce font size for links
+        text-align: center; // Center content
       }
     }
 
-    /* Move Amazon logo to footer */
+    // Move Amazon logo to footer
     .foot-panel3 {
       .logo {
-        background-size: cover;
-        height: 20px; /* Adjusted height to make it smaller */
-        width: 40px;  /* Adjusted width to make it smaller */
+        background-size: cover; // Cover the area with the background image
+        height: 20px; // Adjusted height to make it smaller
+        width: 40px; // Adjusted width to make it smaller
       }
     }
   }
 }
 
-/* For even smaller resolutions (below 480px) */
+// For even smaller resolutions (below 480px)
 @media screen and (max-width: 480px) {
   .navbar {
     .nav-search {
-      width: 80%; /* Further adjust width for smaller screens */
+      width: 80%; // Further adjust width for smaller screens
     }
 
     .wrapper {
       button {
-        width: 100%; /* Ensure button takes full width on small screens */
-        padding: 10px; /* Increase padding for full coverage */
+        width: 100%; // Ensure button takes full width on small screens
+        padding: 10px; // Increase padding for full coverage
       }
     }
   }
 
   .hero-section {
-    height: 150px;
+    height: 150px; // Reduced height for mobile
 
     .hero-msg {
-      font-size: 0.65rem; /* Further reduce font size */
+      font-size: 0.65rem; // Further reduce font size
     }
   }
 
   footer {
     .foot-panel2 ul {
-      font-size: 0.65rem; /* Smaller font for footer links */
+      font-size: 0.65rem; // Smaller font for footer links
     }
 
     .copyright {
-      font-size: 0.6rem;
+      font-size: 0.6rem; // Font size for copyright text
     }
   }
 }
