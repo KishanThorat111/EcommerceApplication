@@ -36,7 +36,12 @@
     (submit)="register ? signUp($event) : signIn($event)"
     [formGroup]="form"
   >
-    <h3>{{ register ? "SIGN-UP" : "SIGN-IN" }}</h3>
+    <h3>{{ register ? 'SIGN-UP' : 'SIGN-IN' }}</h3>
+
+    <!-- Error message display -->
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
 
     <input
       formControlName="username"
@@ -51,14 +56,13 @@
       placeholder="Password"
     />
     <button [class.inactive]="!form.valid" type="submit">
-      {{ register ? "Sign-Up" : "Sign-In" }}
+      {{ register ? 'Sign-Up' : 'Sign-In' }}
     </button>
     <button class="clear" type="button" (click)="register = !register">
-      {{ register ? "Already have an account?" : "Don't have an account?" }}
+      {{ register ? 'Already have an account?' : "Don't have an account?" }}
     </button>
   </form>
 
-  <!-- New message about third-party cookies -->
   <div class="cookie-alert">
     <p>Please allow third-party cookies to ensure this app works correctly.</p>
   </div>
