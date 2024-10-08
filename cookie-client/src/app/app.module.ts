@@ -8,8 +8,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import { HomeComponent } from './pages/home/home.component';
+import { PopupComponent } from './popup/popup.component';
 
-@NgModule({ declarations: [AppComponent, AuthComponent, HomeComponent],
+@NgModule({ declarations: [AppComponent, AuthComponent, HomeComponent, PopupComponent],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,
         FontAwesomeModule,
