@@ -88,7 +88,7 @@ app.use(
 // Route to show backend status
 // Route to show backend status
 // Route to show backend status
-app.get("/", (_, res) => {
+app.get("/", (req, res) => {
   res.send("Backend is running successfully!");
 });
 
