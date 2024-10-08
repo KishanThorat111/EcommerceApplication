@@ -25,6 +25,7 @@
   gap: 1.5rem; /* Increase gap between elements */
   text-align: center;
 
+
   h3 {
     font-size: 2rem; /* Increase font size */
     font-weight: 700;
@@ -78,13 +79,28 @@
 }
 
 .cookie-alert {
+  background-color: transparent;
   margin-top: 15px; /* Adds some space above the message */
   padding: 10px;
-  background-color: #fff3cd; /* Light yellow background */
-  color: #856404; /* Dark yellow text */
-  border: 1px solid #ffeeba; /* Light border */
+  background-color: #1bb5b8; /* Light yellow background */
+  color: #000000; /* Dark yellow text */
+  border: 1px solid #0c0c0c; /* Light border */
   border-radius: 4px; /* Rounded corners */
   text-align: center; /* Center text */
 }
 
+
+@media only screen and (max-width: 820px) {
+  .login-container {
+    width: 100%; /* Full width on smaller screens */
+    max-width: none;
+    padding: 1rem; /* Adjust padding for mobile */
+  }
+  .wrapper {
+    gap: 1rem; /* Reduce gap on mobile */
+  }
+  .cookie-alert {
+    font-size: 0.9rem; /* Smaller text size for alerts */
+  }
+}
 
