@@ -85,6 +85,12 @@ app.use(
   })
 );
 
+// Route to show backend status
+app.get("/", (res) => {
+  res.send("Backend is running successfully!");
+});
+
+
 // Registration endpoint
 app.post("/sign-up", async (req, res) => {
   try {
