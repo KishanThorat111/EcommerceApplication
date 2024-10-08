@@ -179,7 +179,7 @@ app.post("/logout", (req, res) => {
 //     res.status(500).send(error);
 //   }
 // });
-
+////
 // Using auth middleware to check if the user is authenticated
 // The middleware will check if the user is logged in by checking the session
 // If the user is logged in, the request will be passed to the endpoint
