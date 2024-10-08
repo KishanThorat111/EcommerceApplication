@@ -102,7 +102,18 @@
   .cookie-alert {
     font-size: 0.9rem; /* Smaller text size for alerts */
   }
+  .error-message {
+    font-size: 0.8rem; /* Smaller text size for mobile */
+    padding: 0.3rem; /* Adjust padding for mobile */
+  }
 }
+
+button:focus {
+  outline: 2px solid #0056b3; /* Outline color on focus */
+  outline-offset: 2px; /* Space between outline and button */
+}
+
+
 
 .error-message {
   color: #ff4d4d; /* Red color for error */
@@ -113,4 +124,13 @@
   margin-bottom: 1rem;
   font-size: 0.9rem;
   text-align: center;
+}
+
+.error-message {
+  transition: opacity 0.3s ease; /* Smooth transition for the error message */
+  opacity: 1; /* Make it fully visible */
+}
+
+.error-message.ng-enter, .error-message.ng-leave {
+  opacity: 0; /* Fade out */
 }
